@@ -1,65 +1,58 @@
-document.getElementById('registrationForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    let valid = true;
+document.getElementById('eventRegistrationForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
 
-    // Name validation: Letters and spaces only
-    const name = document.getElementById('name').value.trim();
-    const nameRegex = /^[a-zA-Z\s]+$/;
-    if (!nameRegex.test(name)) {
-        document.getElementById('nameError').textContent = "Name can only contain letters and spaces.";
-        document.getElementById('nameError').style.display = 'block';
-        valid = false;
+    let isValid = true;
+
+    // Name validation
+    const name = document.getElementById('name').value;
+    if (!/^[a-zA-Z\s]+$/.test(name)) {
+        isValid = false;
+        document.getElementById('nameError').textContent = 'Name can contain letters and spaces only.';
     } else {
-        document.getElementById('nameError').style.display = 'none';
+        document.getElementById('nameError').textContent = '';
     }
 
-    // Email validation: Valid email format
-    const email = document.getElementById('email').value.trim();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        document.getElementById('emailError').textContent = "Please enter a valid email address.";
-        document.getElementById('emailError').style.display = 'block';
-        valid = false;
+    // Email validation
+    const email = document.getElementById('email').value;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        isValid = false;
+        document.getElementById('emailError').textContent = 'Enter a valid email address.';
     } else {
-        document.getElementById('emailError').style.display = 'none';
+        document.getElementById('emailError').textContent = '';
     }
 
-    // Phone number validation: Format (123) 456-7890
-    const phone = document.getElementById('phone').value.trim();
-    const phoneRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
-    if (!phoneRegex.test(phone)) {
-        document.getElementById('phoneError').textContent = "Phone number must be in the format (123) 456-7890.";
-        document.getElementById('phoneError').style.display = 'block';
-        valid = false;
+    // Phone validation
+    const phone = document.getElementById('phone').value;
+    if (!/^\(\d{3}\) \d{3}-\d{4}$/.test(phone)) {
+        isValid = false;
+        document.getElementById('phoneError').textContent = 'Phone number must be in the format (123) 456-7890.';
     } else {
-        document.getElementById('phoneError').style.display = 'none';
+        document.getElementById('phoneError').textContent = '';
     }
 
-    // Event date validation: Valid date in MM/DD/YYYY format
-    const date = document.getElementById('date').value.trim();
-    const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d{2}$/;
-    if (!dateRegex.test(date)) {
-        document.getElementById('dateError').textContent = "Date must be in MM/DD/YYYY format.";
-        document.getElementById('dateError').style.display = 'block';
-        valid = false;
+    // Event Date validation
+    const eventDate = document.getElementById('eventDate').value;
+    if (!/^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/.test(eventDate)) {
+        isValid = false;
+        document.getElementById('eventDateError').textContent = 'Date must be in MM/DD/YYYY format.';
     } else {
-        document.getElementById('dateError').style.display = 'none';
+        document.getElementById('eventDateError').textContent = '';
     }
 
-    // Number of tickets validation: Between 1 and 10
-    const tickets = document.getElementById('tickets').value.trim();
+    // Tickets validation
+    const tickets = document.getElementById('tickets').value;
     if (tickets < 1 || tickets > 10) {
-        document.getElementById('ticketsError').textContent = "Number of tickets must be between 1 and 10.";
-        document.getElementById('ticketsError').style.display = 'block';
-        valid = false;
+        isValid = false;
+        document.getElementById('ticketsError').textContent = 'Number of tickets must be between 1 and 10.';
     } else {
-        document.getElementById('ticketsError').style.display = 'none';
+        document.getElementById('ticketsError').textContent = '';
     }
 
-    // If form is valid, submit it
-    if (valid) {
-        alert("Registration successful!");
-        // Form can be submitted to the server here using fetch or XMLHttpRequest
+    // Display success message if form is valid
+    if (isValid) {
+        document.getElementById('successMessage').textContent = 'Registration successful!';
+    } else {
+        document.getElementById('successMessage').textContent = '';
     }
 });
 
